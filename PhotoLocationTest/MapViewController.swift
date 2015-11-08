@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MapViewController.swift
 //  PhotoLocationTest
 //
 //  Created by Connor Killion on 11/7/15.
@@ -9,42 +9,38 @@
 import UIKit
 import MapKit
 
-class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CLLocationManagerDelegate {
-    
-    // Mark: Outlets
-    @IBOutlet weak var myImageView: UIImageView!
-    @IBOutlet weak var locationLabel: UILabel!
+class MapViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CLLocationManagerDelegate {
     
     let picker = UIImagePickerController()
     let locationManager = CLLocationManager()
     
+    
+    // Mark: Outlets
+    @IBOutlet weak var map: MKMapView!
+    
     // start current location as nil
     var currentLocation: CLLocation! = nil
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         picker.delegate = self
         
         locationManager.delegate = self
+        map.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        map.showsUserLocation = true
+        
+        if CLLocationManager.authorizationStatus() == .NotDetermined {
+            self.locationManager.requestAlwaysAuthorization()
+        }
+        
+        locationManager.startUpdatingLocation()
     }
     
     // Mark: Actions
     @IBAction func shootPhoto(sender: UIButton) {
         if UIImagePickerController.availableCaptureModesForCameraDevice(.Rear) != nil {
-            
-            if CLLocationManager.authorizationStatus() == .NotDetermined {
-                self.locationManager.requestWhenInUseAuthorization()
-            }
-            
-            
-            locationManager.startUpdatingLocation()
             picker.allowsEditing = false
             picker.sourceType = UIImagePickerControllerSourceType.Camera
             picker.cameraCaptureMode = .Photo
@@ -54,6 +50,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             noCamera()
         }
     }
+    
     
     func noCamera() {
         let alertVC = UIAlertController(
@@ -66,7 +63,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             handler: nil)
         alertVC.addAction(okAction)
         presentViewController(alertVC, animated: true, completion: nil)
-            
+        
     }
     
     // Mark: Delegates
@@ -74,10 +71,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     // Delegate for taking pictures
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         let chosenImage = info[UIImagePickerControllerOriginalImage] as! UIImage
-        myImageView.contentMode = .ScaleAspectFit
-        myImageView.image = chosenImage
         if currentLocation == nil{
-            locationLabel.text = "Sorry, we couldn't determine a location!"
         } else {
             
             let geocoder = CLGeocoder()
@@ -85,7 +79,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             geocoder.reverseGeocodeLocation(currentLocation, completionHandler: {(placemarks, error) -> Void in
                 let placemark = placemarks![0] as CLPlacemark
                 let cityName = placemark.locality
-                self.locationLabel.text = "Location: \(cityName!)"
+                
+                let capsule = Capsule(title: "\(cityName!) Capsule", image: chosenImage, coordinate: self.currentLocation.coordinate)
+                self.map.addAnnotation(capsule)
             })
         }
         dismissViewControllerAnimated(true, completion: nil)
@@ -97,14 +93,18 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     // Delegate for getting location
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        currentLocation = locations.last
+        currentLocation = locations.last! as CLLocation
+        
+        let center = CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)
+        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+        
+        self.map.setRegion(region, animated: true)
     }
     
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        if status == .AuthorizedWhenInUse {
+        if status == .AuthorizedAlways {
             manager.startUpdatingLocation()
         }
     }
     
 }
-

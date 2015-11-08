@@ -14,6 +14,9 @@
 		ADCFDDD81BEE68220008A767 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ADCFDDD61BEE68220008A767 /* LaunchScreen.storyboard */; };
 		ADCFDDE31BEE68220008A767 /* PhotoLocationTestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADCFDDE21BEE68220008A767 /* PhotoLocationTestTests.swift */; };
 		ADCFDDEE1BEE68220008A767 /* PhotoLocationTestUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADCFDDED1BEE68220008A767 /* PhotoLocationTestUITests.swift */; };
+		ADCFDE381BEEB4430008A767 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADCFDE371BEEB4430008A767 /* MapViewController.swift */; };
+		ADCFDE3A1BEF07B20008A767 /* Capsule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADCFDE391BEF07B20008A767 /* Capsule.swift */; };
+		ADCFDE3C1BEF322D0008A767 /* VCMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADCFDE3B1BEF322D0008A767 /* VCMapView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +50,9 @@
 		ADCFDDE91BEE68220008A767 /* PhotoLocationTestUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PhotoLocationTestUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADCFDDED1BEE68220008A767 /* PhotoLocationTestUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLocationTestUITests.swift; sourceTree = "<group>"; };
 		ADCFDDEF1BEE68220008A767 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		ADCFDE371BEEB4430008A767 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		ADCFDE391BEF07B20008A767 /* Capsule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Capsule.swift; sourceTree = "<group>"; };
+		ADCFDE3B1BEF322D0008A767 /* VCMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VCMapView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +105,9 @@
 			children = (
 				ADCFDDCD1BEE68220008A767 /* AppDelegate.swift */,
 				ADCFDDCF1BEE68220008A767 /* ViewController.swift */,
+				ADCFDE371BEEB4430008A767 /* MapViewController.swift */,
+				ADCFDE3B1BEF322D0008A767 /* VCMapView.swift */,
+				ADCFDE391BEF07B20008A767 /* Capsule.swift */,
 				ADCFDDD11BEE68220008A767 /* Main.storyboard */,
 				ADCFDDD41BEE68220008A767 /* Assets.xcassets */,
 				ADCFDDD61BEE68220008A767 /* LaunchScreen.storyboard */,
@@ -193,6 +202,7 @@
 				TargetAttributes = {
 					ADCFDDC91BEE68220008A767 = {
 						CreatedOnToolsVersion = 7.1;
+						DevelopmentTeam = FUGJDA8ZBG;
 					};
 					ADCFDDDD1BEE68220008A767 = {
 						CreatedOnToolsVersion = 7.1;
@@ -257,6 +267,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				ADCFDDD01BEE68220008A767 /* ViewController.swift in Sources */,
+				ADCFDE3A1BEF07B20008A767 /* Capsule.swift in Sources */,
+				ADCFDE3C1BEF322D0008A767 /* VCMapView.swift in Sources */,
+				ADCFDE381BEEB4430008A767 /* MapViewController.swift in Sources */,
 				ADCFDDCE1BEE68220008A767 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -397,10 +410,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = PhotoLocationTest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.ckillion.PhotoLocationTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -408,10 +424,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = PhotoLocationTest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.ckillion.PhotoLocationTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
